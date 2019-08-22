@@ -1,18 +1,24 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const passport = require('passport');
+const session = require('express-session');
 
+require('./config/passport')(passport);
+
+const PORT = 3000;
+const dbConfig = require('./db');
 const routes = require('./routes');
 
 const server = express();
-mongoose.connect('mongodb+srv://omnistack:omnistack@cluster0-2o8xy.mongodb.net/omnistack8?retryWrites=true&w=majority',
-  { useNewUrlParser: true });
+mongoose.connect(dbConfig.url, { useNewUrlParser: true });
 
+server.use(session({ secret: 'mysecretkey' }));
+server.use(passport.initialize());
+server.use(passport.session());
 server.use(cors());
 server.use(express.json());
 
 server.use(routes);
 
-server.listen(3000, () => {
-  console.log('Server running on port 3000.');
-});
+server.listen(PORT, () => console.log(`Server running on port ${ PORT }.`));

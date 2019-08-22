@@ -9,6 +9,11 @@ const DevSchema = new Schema({
     type: String,
     required: true,
   },
+  password: {
+    type: String,
+    required: true,
+    select: false
+  },
   bio: String,
   avatar: {
     type: String,
@@ -22,6 +27,6 @@ const DevSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Dev'
   }]
-}, { timestamps: true });
+}, { timestamps: true, versionKey: false });
 
 module.exports = model('Dev', DevSchema);
