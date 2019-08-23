@@ -4,6 +4,8 @@ const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
 
+require('dotenv-safe').config();
+
 require('./config/passport')(passport);
 
 const PORT = 3000;
